@@ -1,7 +1,7 @@
-version: '3.8'  # Docker Compose version
+version: '3.8'  
 
 services:
-  mongo:  # MongoDB service
+  mongo:  
     image: mongo
    
     environment:
@@ -10,7 +10,7 @@ services:
     ports:
       - "27017:27017"
 
-  mongo-express:  # Web UI for MongoDB
+  mongo-express:  
     image: mongo-express
     
    

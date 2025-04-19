@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile App</title>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    label, input, button { display: block; margin: 8px 0; }
+    pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>👤 User Profile Dashboard</h1>
+
+  <button onclick="getProfile()">🔍 Get Profile</button>
+  <pre id="profileDisplay">Click to load profile...</pre>
+
+  <h3>✏️ Update Profile</h3>
+  <label>User ID: <input type="number" id="userid" value="1" /></label>
+  <label>Name: <input type="text" id="name" /></label>
+  <label>Email: <input type="email" id="email" /></label>
+  <button onclick="updateProfile()">✅ Update Profile</button>
+
+  <script>
+    async function getProfile() {
+      const res = await fetch('/get-profile');
+      const data = await res.json();
+      document.getElementById('profileDisplay').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function updateProfile() {
+      const userid = parseInt(document.getElementById('userid').value);
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+
+      const res = await fetch('/update-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userid, name, email })
+      });
+
+      const msg = await res.text();
+      alert(msg);
+      getProfile();
+    }
+  </script>
+</body>
+</html>
